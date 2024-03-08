@@ -1,0 +1,50 @@
+CREATE TABLE IF NOT EXISTS products (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    description TEXT,
+    price DECIMAL(10, 2) NOT NULL,
+    stock_items INTEGER NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE IF NOT EXISTS users (
+    id SERIAL PRIMARY KEY,
+    username VARCHAR(50) NOT NULL,
+    email VARCHAR(100) NOT NULL UNIQUE,
+    password_hash VARCHAR(255) NOT NULL,
+    user_role VARCHAR(255) NOT NULL,
+    address VARCHAR(255),
+    phone VARCHAR(20),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE IF NOT EXISTS orders (
+    id SERIAL PRIMARY KEY,
+    user_id INT NOT NULL,
+    status VARCHAR(50) DEFAULT 'Pending',
+    products_ordered JSONB NOT NULL,
+    CONSTRAINT fk_user_id FOREIGN KEY (user_id) REFERENCES users(id),
+    order_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+INSERT INTO products (name, description, price, stock_items) VALUES
+('Laptop', '15.6-inch Full HD Laptop', 799.99, 100),
+('Smartphone', '6.4-inch OLED Smartphone', 699.99, 200),
+('Headphones', 'Wireless Noise-Canceling Headphones', 249.99, 50),
+('Camera', '24MP DSLR Camera with Lens Kit', 999.99, 75),
+('Tablet', '10.2-inch Retina Display Tablet', 499.99, 150),
+('Smartwatch', 'Fitness Tracker Smartwatch', 199.99, 100),
+('Gaming Console', 'Next-Gen Gaming Console', 499.99, 50),
+('Printer', 'Wireless All-in-One Printer', 149.99, 25),
+('Monitor', '27-inch 4K Ultra HD Monitor', 399.99, 30),
+('External Hard Drive', '2TB Portable External Hard Drive', 79.99, 100),
+('Bluetooth Speaker', 'Waterproof Bluetooth Speaker', 59.99, 75),
+('Wireless Mouse', 'Ergonomic Wireless Mouse', 29.99, 200),
+('Keyboard', 'Mechanical Gaming Keyboard', 99.99, 100),
+('Backpack', 'Water-Resistant Laptop Backpack', 49.99, 150),
+('Desk Lamp', 'LED Desk Lamp with USB Charging Port', 39.99, 50),
+('Coffee Maker', 'Programmable Coffee Maker', 79.99, 25),
+('Electric Toothbrush', 'Rechargeable Electric Toothbrush', 49.99, 50),
+('Yoga Mat', 'Eco-Friendly Yoga Mat', 29.99, 100),
+('Dumbbell Set', 'Adjustable Dumbbell Set with Stand', 199.99, 20),
+('Resistance Bands', 'Set of 5 Resistance Bands', 24.99, 50);
